@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+
+    <!-- ログイン画面フォーム -->
+    <form-beans>
+    <form-bean name="startForm" type="StartForm" />
+
+      <!-- ログイン画面フォーム -->
+      <form-bean name="loginForm" type="form.cmn.LoginForm"/>
+      <!-- 社員マスタメンテナンス画面フォーム -->
+      <form-bean name="employeeMstMntForm" type="form.mst.EmployeeMstMntForm"/>
+      <!-- 社員マスタメンテナンス登録画面フォーム -->
+      <form-bean name="employeeMstMntRegisterForm" type="form.mst.EmployeeMstMntRegisterForm"/>
+      <!-- シフトマスタメンテナンス画面フォーム -->
+      <form-bean name="shiftMstMntForm" type="form.mst.ShiftMstMntForm"/>
+      <!-- シフトマスタメンテナンス登録画面フォーム -->
+      <form-bean name="shiftMstMntRegisterForm" type="form.mst.ShiftMstMntRegisterForm"/>
+      <!-- 希望出勤日登録画面フォーム -->
+      <form-bean name="workDateRequestInputForm" type="form.shk.WorkDateRequestInputForm"/>
+      <!-- 希望出勤日確認画面フォーム -->
+      <form-bean name="workDateRequestCheckForm" type="form.shk.WorkDateRequestCheckForm"/>
+      <!-- 日別シフト画面フォーム -->
+      <form-bean name="dailyShiftForm" type="form.day.DailyShiftForm"/>
+      <!-- 勤務実績入力確認画面フォーム -->
+      <form-bean name="workRecordInputForm" type="form.act.WorkRecordInputForm"/>
+      <!-- 勤務実績確認画面フォーム -->
+      <form-bean name="workRecordCheckForm" type="form.act.WorkRecordInputForm"/>
+      <!-- 基本シフト登録画面フォーム -->
+      <form-bean name="baseShiftMstMntForm" type="form.bse.BaseShiftMstMntForm" />
+      <!-- 月別シフト入力画面フォーム -->
+      <form-bean name="monthlyShiftInputForm" type="form.mth.MonthlyShiftInputForm"/>
+      <!-- 月別シフト確認画面フォーム -->
+      <form-bean name="monthlyShiftCheckForm" type="form.mth.MonthlyShiftCheckForm"/>
+      <!-- シフト凡例画面フォーム -->
+      <form-bean name="shiftPatternForm" type="form.cmn.ShiftPatternForm"/>
+    </form-beans>
+
+    <global-exceptions>
+        <!-- sample exception handler
+        <exception
+            key="expired.password"
+            type="app.ExpiredPasswordException"
+            path="/changePassword.jsp"/>
+        end sample -->
+    </global-exceptions>
+
+    <global-forwards>
+      <forward
+        name="welcome"
+        path="/Welcome.do"/>
+    </global-forwards>
+
+    <action-mappings>
+      <!-- ログイン -->
+      <action
+        path="/login"
+        type="action.cmn.LoginAction"
+        name="loginForm"
+        scope="session"
+        input="/pages/cmn/login.jsp"
+        validate="true">
+        <forward name="success" path="/pages/cmn/menu.jsp"/>
+        <forward name="error" path="/pages/cmn/login.jsp"/>
+      </action>
+
+      <!-- ログアウト -->
+      <action
+        path="/logout"
+        type="action.cmn.LogoutAction"
+        name="loginForm"
+        scope="session"
+        validate="false">
+        <forward name="success" path="/pages/cmn/login.jsp"/>
+      </action>
+
+      <!-- メニュー -->
+      <action
+        path="/menu"
+        type="action.cmn.MenuAction"
+        name="loginForm"
+        scope="session"
+        validate="false">
+        <forward name="success" path="/pages/cmn/menu.jsp"/>
+        <forward name="error" path="/pages/cmn/login.jsp"/>
+      </action>
+
+      <!-- 社員マスタメンテナンス 初期表示 -->
+      <action
+        path="/employeeMstMnt"
+        type="action.mst.EmployeeMstMntInitAction"
+        name="employeeMstMntForm"
+        input="/pages/mst/employeeMstMnt.jsp"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/pages/mst/employeeMstMnt.jsp"/>
+        <forward name="nodata" path="/pages/mst/employeeMstMntRegister.jsp"/>
+      </action>
+      <!-- 社員マスタメンテナンス 更新 -->
+      <action
+        path="/employeeMstMntUpdate"
+        type="action.mst.EmployeeMstMntUpdateAction"
+        name="employeeMstMntForm"
+        input="/pages/mst/employeeMstMnt.jsp"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/pages/mst/employeeMstMnt.jsp"/>
+        <forward name="nodata" path="/pages/mst/employeeMstMntRegister.jsp"/>
+      </action>
+      <!-- 社員マスタメンテナンス 登録初期表示 -->
+      <action
+        path="/employeeMstMntRegisterInit"
+        type="action.mst.EmployeeMstMntRegisterInitAction"
+        name="employeeMstMntForm"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/pages/mst/employeeMstMntRegister.jsp"/>
+      </action>
+      <!-- 社員マスタメンテナンス 登録 -->
+      <action
+        path="/employeeMstMntRegister"
+        type="action.mst.EmployeeMstMntRegisterAction"
+        name="employeeMstMntRegisterForm"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/employeeMstMnt.do"/>
+      </action>
+      <!-- 社員マスタメンテナンス 戻る -->
+      <action
+        path="/employeeMstMntRegisterBack"
+        type="action.mst.EmployeeMstMntRegisterBackAction"
+        name="employeeMstMntRegisterForm"
+        scope="session">
+        <forward name="success" path="/employeeMstMnt.do"/>
+      </action>
+      
+      <!-- シフトマスタメンテナンス 初期表示 -->
+      <action
+        path="/shiftMstMnt"
+        type="action.mst.ShiftMstMntInitAction"
+        name="shiftMstMntForm"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/pages/mst/shiftMstMnt.jsp"/>
+        <forward name="nodata" path="/pages/mst/shiftMstMnt.jsp"/>
+      </action>
+      <!-- シフトマスタメンテナンス 更新 -->
+      <action
+        path="/shiftMstMntUpdate"
+        type="action.mst.ShiftMstMntUpdateAction"
+        name="shiftMstMntForm"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/pages/mst/shiftMstMnt.jsp"/>
+      </action>
+      <!-- シフトマスタメンテナンス 登録初期表示 -->
+      <action
+        path="/shiftMstMntRegisterInit"
+        type="action.mst.ShiftMstMntRegisterInitAction"
+        name="shiftMstMntForm"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/pages/mst/shiftMstMntRegister.jsp"/>
+      </action>
+      <!-- シフトマスタメンテナンス 登録 -->
+      <action
+        path="/shiftMstMntRegister"
+        type="action.mst.ShiftMstMntRegisterAction"
+        name="shiftMstMntRegisterForm"
+        scope="session"
+        validate="true">
+        <forward name="success" path="/shiftMstMnt.do"/>
+      </action>
+      <!-- シフトマスタメンテナンス 戻る -->
+      <action
+        path="/shiftMstMntRegisterBack"
+        type="action.mst.ShiftMstMntRegisterBackAction"
+        name="shiftMstMntRegisterForm"
+        scope="session">
+        <forward name="success" path="/menu.do"/>
+      </action>
+
+      <!-- 出勤希望日確認初期表示 -->
+      <action
+        path="/workDateRequestCheckInit"
+        type="action.shk.WorkDateRequestCheckInitAction"
+        name="workDateRequestCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestCheck.jsp"/>
+      </action>
+      <!-- 出勤希望日確認 -->
+      <action
+        path="/workDateRequestCheckSearch"
+        type="action.shk.WorkDateRequestCheckSearchAction"
+        name="workDateRequestCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestCheck.jsp"/>
+      </action>
+      <!-- 出勤希望日確認(改ページ) -->
+      <action
+        path="/workDateRequestCheckPage"
+        type="action.shk.WorkDateRequestCheckPageAction"
+        name="workDateRequestCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestCheck.jsp"/>
+      </action>
+      <!-- 出勤希望日確認（サブ画面）初期表示 -->
+      <action
+        path="/workDateRequestCheckSubInit"
+        type="action.shk.WorkDateRequestCheckInitAction"
+        name="workDateRequestCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestCheckSub.jsp"/>
+      </action>
+      <!-- 出勤希望日確認（サブ画面） -->
+      <action
+        path="/workDateRequestCheckSubSearch"
+        type="action.shk.WorkDateRequestCheckSearchAction"
+        name="workDateRequestCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestCheckSub.jsp"/>
+      </action>
+      <!-- 出勤希望日確認改ページ（サブ画面） -->
+      <action
+        path="/workDateRequestCheckSubPage"
+        type="action.shk.WorkDateRequestCheckPageAction"
+        name="workDateRequestCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestCheckSub.jsp"/>
+      </action>
+
+       <!-- 月別シフト入力 -->
+      <action
+        path="/monthlyShiftInputInit"
+        type="action.mth.MonthlyShiftInputInitAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success"  path="/menu.do"/>
+      </action>
+		<!-- 月別シフト入力基本シフト反映 -->
+      <action
+        path="/monthlyShiftInputImportKihon"
+        type="action.mth.MonthlyShiftInputImportBaseAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftInput.jsp"/>
+      </action>
+      
+      <!-- 日別シフト初期表示 -->
+      <action
+        path="/dailyShiftInit"
+        type="action.day.DailyShiftInitAction"
+        name="dailyShiftForm"
+        scope="session">
+        <forward name="success" path="/pages/day/dailyShift.jsp"/>
+      </action>
+      <!-- 日別シフト改ページ -->
+      <action
+        path="/dailyShiftPage"
+        type="action.day.DailyShiftPageAction"
+        name="dailyShiftForm"
+        scope="session">
+        <forward name="success" path="/pages/day/dailyShift.jsp"/>
+      </action>
+
+      <!-- 勤務実績入力確認初期表示 -->
+      <action
+        path="/workRecordInputInit"
+        type="action.act.WorkRecordInputInitAction"
+        name="workRecordInputForm"
+        scope="session">
+        <forward name="success" path="/pages/act/workRecordInput.jsp"/>
+      </action>
+      <!-- 勤務実績入力確認検索 -->
+      <action
+        path="/workRecordInputSearch"
+        type="action.act.WorkRecordInputSeachAction"
+        name="workRecordInputForm"
+        scope="session">
+        <forward name="success" path="/pages/act/workRecordInput.jsp"/>
+      </action>
+      <!-- 勤務実績入力確認登録処理 -->
+      <action
+        path="/workRecordInputRegister"
+        type="action.act.WorkRecordInputRegisterAction"
+        name="workRecordInputForm"
+        scope="session">
+        <forward name="success" path="/pages/act/workRecordInput.jsp"/>
+      </action>
+
+      <!-- 勤務実績確認初期表示 -->
+      <action
+        path="/workRecordCheckInit"
+        type="action.act.WorkRecordCheckInitAction"
+        name="workRecordCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/act/workRecordCheck.jsp"/>
+      </action>
+      <!-- 勤務実績確認検索 -->
+      <action
+        path="/workRecordCheckSearch"
+        type="action.act.WorkRecordCheckSearchAction"
+        name="workRecordCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/act/workRecordCheck.jsp"/>
+      </action>
+
+      <!-- 基本シフト登録 初期表示 -->
+      <action
+        path="/baseShiftInit"
+        type="action.bse.BaseShiftMstMntInitAction"
+        name="baseShiftMstMntForm"
+        input="/pages/bse/baseShiftMstMnt.jsp"
+        scope="session"
+        validate="false">
+        <forward name="success" path="/pages/bse/baseShiftMstMnt.jsp" />
+        <forward name="failure" path="/pages/bse/baseShiftMstMnt.jsp" />
+      </action>
+      <!-- 基本シフト登録 登録 -->
+      <action
+        path="/baseShiftRegister"
+        type="action.bse.BaseShiftMstMntRegisterAction"
+        name="baseShiftMstMntForm"
+        input="/pages/bse/baseShiftMstMnt.jsp"
+        scope="session"
+        validate="false">
+        <forward name="success" path="/pages/bse/baseShiftMstMnt.jsp" />
+        <forward name="failure" path="/pages/bse/baseShiftMstMnt.jsp" />
+      </action>
+      
+      <!-- 基本シフト登録 初期表示 -->
+      <action
+        path="/baseShiftCheckInit"
+        type="action.bse.BaseShiftMstMntCheckInitAction"
+        name="baseShiftMstMntForm"
+        input="/pages/bse/baseShiftMstMntCheck.jsp"
+        scope="session"
+        validate="false">
+        <forward name="success" path="/pages/bse/baseShiftMstMntCheck.jsp" />
+        <forward name="failure" path="/pages/bse/baseShiftMstMntCheck.jsp" />
+      </action>
+      <!-- 月別シフト入力初期表示 -->
+      <action
+        path="/monthlyShiftInputInit"
+        type="action.mth.MonthlyShiftInputInitAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftInput.jsp"/>
+      </action>
+      <!-- 月別シフト入力検索 -->
+      <action
+        path="/monthlyShiftInputSearch"
+        type="action.mth.MonthlyShiftInputSearhAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftInput.jsp"/>
+      </action>
+      <!-- 月別シフト入力ページ -->
+      <action
+        path="/monthlyShiftInputPage"
+        type="action.mth.MonthlyShiftInputPageAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftInput.jsp"/>
+      </action>
+      <!-- 月別シフト出勤希望反映 -->
+      <action
+        path="/monthlyShiftInputWorkDateRequest"
+        type="action.mth.MonthlyShiftInputReflectAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftInput.jsp"/>
+      </action>
+      <!-- 月別シフト登録 -->
+      <action
+        path="/monthlyShiftInputRegister"
+        type="action.mth.MonthlyShiftInputRegisterAction"
+        name="monthlyShiftInputForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftInput.jsp"/>
+      </action>
+      <!-- 月別シフト確認初期表示 -->
+      <action
+        path="/monthlyShiftCheckInit"
+        type="action.mth.MonthlyShiftCheckInitAction"
+        name="monthlyShiftCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftCheck.jsp"/>
+      </action>
+      <!-- 月別シフト確認検索 -->
+      <action
+        path="/monthlyShiftCheckSearch"
+        type="action.mth.MonthlyShiftCheckSearchAction"
+        name="monthlyShiftCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftCheck.jsp"/>
+      </action>
+      <!-- 月別シフト確認ページング -->
+      <action
+        path="/monthlyShiftCheckPage"
+        type="action.mth.MonthlyShiftCheckPageAction"
+        name="monthlyShiftCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftCheck.jsp"/>
+      </action>
+      <!-- 月別シフト確認印刷 -->
+      <action
+        path="/monthlyShiftCheckPrint"
+        type="action.mth.MonthlyShiftCheckPrintAction"
+        name="monthlyShiftCheckForm"
+        scope="session">
+        <forward name="success" path="/pages/mth/monthlyShiftCheck.jsp"/>
+      </action>
+      <!-- シフト凡例 -->
+      <action
+        path="/shiftPattern"
+        type="action.cmn.ShiftPatternAction"
+        name="shiftPatternForm"
+        scope="session">
+        <forward name="success" path="/pages/cmn/shiftPattern.jsp"/>
+      </action>
+      
+       <!-- 出勤希望日入力初期表示 -->
+      <action
+        path="/workDateRequestInputInit"
+        type="action.shk.WorkDateRequestInputInitAction"
+        name="workDateRequestInputForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestInput.jsp"/>
+      </action>
+      <!-- 出勤希望日入力 検索-->
+      <action
+        path="/workDateRequestInputSearch"
+        type="action.shk.WorkDateRequestInputSearchAction"
+        name="workDateRequestInputForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestInput.jsp"/>
+      </action>
+      <!-- 出勤希望日入力(改ページ) -->
+      <action
+        path="/workDateRequestInputPage"
+        type="action.shk.WorkDateRequestInputPageAction"
+        name="workDateRequestInputForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestInput.jsp"/>
+      </action>
+      
+      <!-- 出勤希望日入力登録 -->
+      <action
+        path="/workDateRequestInputRegister"
+        type="action.shk.WorkDateRequestInputRegisterAction"
+        name="workDateRequestInputForm"
+        scope="session">
+        <forward name="success" path="/pages/shk/workDateRequestInput.jsp"/>
+      </action>
+    </action-mappings>
+
+    <controller bufferSize="4096" maxFileSize="256M" tempDir="/pages/sample"/>
+
+    <message-resources parameter="message" />
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+      property="pathnames"
+      value="/org/apache/struts/validator/validator-rules.xml, /WEB-INF/validation.xml"/>
+  </plug-in>
+</struts-config>
+
