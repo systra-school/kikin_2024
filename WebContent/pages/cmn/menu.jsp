@@ -51,7 +51,7 @@
                      property="authorityId"
                      value="<%=CommonConstant.Authority.ADMIN.getId() %>">
           <div class="menuBlock">
-            <html:form action="/monthlyShiftCheckInit">
+            <html:form action="/monthlyShiftInputInit">
               <input type="submit" value="月別シフト確認" class="bigButton" />
             </html:form>
             <html:form action="/dailyShiftInit">
@@ -72,7 +72,7 @@
             <html:form action="/workDateRequestCheckInit">
               <input type="submit" value="出勤希望日確認" class="bigButton" />
             </html:form>
-            <html:form action="/monthlyShiftInputInit">
+            <html:form action="/monthlyShiftCheckInit">
               <input type="submit" value="月別シフト入力" class="bigButton" />
             </html:form>
           </div>

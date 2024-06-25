@@ -1,6 +1,5 @@
 <!-- login.jsp -->
-<%@page contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -20,16 +19,10 @@
 </head>
 <body>
 
-	<%
-  if(session.getAttribute("error")!=null){
-	  
-    %>
 	<script type="text/javascript">
-  	var msg = getMessageCodeOnly('E-MSG-000002');
-    alert(msg);
-  </script>
-	<%
-  session.setAttribute("error", null);}%>
+		var msg = getMessageCodeOnly('E-MSG-000002');
+		alert(msg);
+	</script>
 
 	<div id="wrapper">
 		<div id="header">
@@ -57,6 +50,7 @@
 					<html:submit property="submit" value="ログイン" />
 					<html:reset value="リセット" />
 				</html:form>
+				sh0001<BR>
 			</div>
 		</div>
 		<div id="footer">
